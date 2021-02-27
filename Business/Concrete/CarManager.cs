@@ -1,9 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,14 +23,11 @@ namespace Business.Concrete
             _carDal = iCarDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.Description.Length<2)
-            {
-                return new ErrorResult(Messages.CarDescriptionInvalid);
-            }
-            _carDal.Add(car);
 
+            _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);    
         }
 
@@ -51,20 +52,6 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(i=>i.Id == carId));
         }
 
-        public IDataResult<List<Car>> GetByModelYear(int modelYear)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(i=>i.ModelYear==modelYear));
-        }
-
-        public IDataResult<List<Car>> GetByBrandId(int id)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(i=>i.BrandId==id));
-        }
-
-        public IDataResult<List<Car>> GetByColorId(int id)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(i=>i.ColorId==id));
-        }
 
         public IResult Update(Car car)
         {

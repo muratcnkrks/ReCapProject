@@ -10,14 +10,14 @@ namespace ConsoleUI
     class Program
     {
         static void Main(string[] args)
-        {
-            //AddedTest();
-            //BrandGetAllTest();
-            //UpdatedTest();
-            //JoinTest();
+       {
+    //        //AddedTest();
+    //        //BrandGetAllTest();
+    //        //UpdatedTest();
+    //        //JoinTest();
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            rentalManager.Add(new Rental { CarId=1,CustomerId=1,RentDate=2018, ReturnDate=2018});
+            rentalManager.Add(new Rental { CarId=1,CustomerId=1});
         }
 
         private static void JoinTest()
@@ -50,7 +50,7 @@ namespace ConsoleUI
                     Console.WriteLine(brand.BrandId);
                 }
             }
-            
+
         }
 
         private static void AddedTest()
